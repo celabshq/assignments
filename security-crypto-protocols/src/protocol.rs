@@ -1,0 +1,3 @@
+//! SASP wire protocol: framing, parsing, and key derivation ...
+//!
+//! TODO: Add the protocol implementation in here.

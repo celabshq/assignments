@@ -1,0 +1,35 @@
+[package]
+name = "sasp"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+# --- MLS control plane (provided helper uses these) ---
+openmls = { version = "0.8.1", features = ["libcrux-provider"] }
+openmls_libcrux_crypto = "0.3.1"
+openmls_basic_credential = "0.5.0"
+
+# --- Individual libcrux sub-crates for key-derivation / transport crypto ---
+libcrux-hkdf    = "=0.0.6"
+libcrux-hmac    = "=0.0.6"
+libcrux-aead    = "=0.0.6"
+libcrux-sha2    = "=0.0.6"
+libcrux-secrets = "=0.0.5"
+libcrux-traits  = "=0.0.6"
+
+# --- Async networking + serialization ---
+tokio     = { version = "1", features = ["net", "io-util", "macros", "rt-multi-thread"] }
+serde     = { version = "1", features = ["derive"] }
+thiserror = "2" # helper for typed errors
+
+[lib]
+name = "sasp"
+path = "src/lib.rs"
+
+[[bin]]
+name = "server"
+path = "src/bin/server.rs"
+
+[[bin]]
+name = "client"
+path = "src/bin/client.rs"
