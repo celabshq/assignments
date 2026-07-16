@@ -19,7 +19,7 @@ Your task is to implement SASP (Secure Asset Storage Protocol): a custom, minima
      (Derive keys  |                     | (Derive keys
       via Exporter)|                     |  via Exporter)
                    v                     v
-               [ Custom SASP over TCP Stream ]
+                  [ ==== Custom SASP ==== ]
                    \                     /
                     v                   v
                 [ Untrusted Storage Server ]
@@ -30,8 +30,8 @@ Your task is to implement SASP (Secure Asset Storage Protocol): a custom, minima
 Implement a minimal, functional Rust client and server that demonstrates:
 
 1. **Cryptographic Key Derivation:** Utilizing the OpenMLS Exporter API to get a base secret, using `libcrux` sub-crates to derive storage keys and handle transport security.
-2. **Custom Protocol Framing:** Building everything necessary to handle asset uploads.
-3. **Defensive Parsing:** Handling untrusted network buffers safely without risking memory exhaustion or panics.
+2. **Protocol Framing:** Building everything necessary to handle asset uploads.
+3. **Defensive Parsing:** Handling untrusted network buffers safely without risking memory exhaustion, panics, or other issues.
 
 ## 🧠 Required System Design Discussion
 
@@ -103,7 +103,7 @@ Both set up the group, then hit the SASP `todo!`. The
 untrusted storage server (the target of your SASP protocol) is run separately:
 
 ```bash
-cargo run --bin server            # binds 127.0.0.1:9000 and accepts connections
+cargo run --bin server            # hits the SASP `todo!` (transport + framing are yours)
 ```
 
 ### Repository layout
@@ -113,7 +113,7 @@ cargo run --bin server            # binds 127.0.0.1:9000 and accepts connections
 | `src/mls.rs` | ✅ provided | Single-member MLS `Client` (create/join a group). You shouldn't need to touch it unless you want to add more members. |
 | `src/wire.rs` | ✅ provided | Length-prefixed async transport for the client-to-client MLS handshake. |
 | `src/bin/client.rs` | 🟡 provided + **TODO** | P2P MLS handshake; SASP upload/download is yours. |
-| `src/bin/server.rs` | 🟡 provided + **TODO** | Storage server; accept loop provided, frame handling/storage is yours. |
+| `src/bin/server.rs` | 🟡 provided + **TODO** | Storage server; transport, accept loop, and frame handling/storage are yours. |
 | `src/protocol.rs` | 🛠️ **TODO** | SASP - The core of the task. |
 | `src/error.rs` | 🛠️ **TODO** | Some errors - seeded with a few variants. |
 | `tests/group_secret.rs` | ✅ provided | Green baseline test exercising the minimal MLS `Client` handshake. |

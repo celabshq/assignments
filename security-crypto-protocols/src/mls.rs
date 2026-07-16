@@ -1,6 +1,6 @@
 //! Provided MLS client helper.
 //!
-//! This module is part of the *provided skeleton* — you should not need to touch it.
+//! This module is part of the provided skeleton.
 //! It models a **single** MLS group member ([`Client`]) using the
 //! `openmls_libcrux_crypto` provider, so the SASP layer can be built on top.
 //!
@@ -157,19 +157,5 @@ impl Client {
             group.merge_staged_commit(&self.provider, *staged_commit)?;
         }
         Ok(())
-    }
-
-    /// Export a secret from the MLS Exporter.
-    ///
-    /// Synchronized members return identical bytes for the same `(label, context, length)`.
-    /// This is the OpenMLS Exporter API your SASP key schedule should build on.
-    pub fn export_secret(
-        &self,
-        _label: &str,
-        _context: &[u8],
-        _length: usize,
-    ) -> Result<Vec<u8>, Box<dyn Error>> {
-        // TODO: export an MLS secret.
-        todo!()
     }
 }
