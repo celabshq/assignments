@@ -13,9 +13,8 @@ pub const MAX_MSG_LEN: usize = 1024 * 1024; // 1 MiB — MLS control messages ar
 
 /// Write a single length-prefixed message: `u32` big-endian length, then the bytes.
 pub async fn write_msg<W: AsyncWrite + Unpin>(w: &mut W, msg: &[u8]) -> std::io::Result<()> {
-    let len = u32::try_from(msg.len()).map_err(|_| {
-        std::io::Error::new(std::io::ErrorKind::InvalidInput, "message too large")
-    })?;
+    let len = u32::try_from(msg.len())
+        .map_err(|_| std::io::Error::new(std::io::ErrorKind::InvalidInput, "message too large"))?;
     w.write_all(&len.to_be_bytes()).await?;
     w.write_all(msg).await?;
     w.flush().await?;
